@@ -25,8 +25,8 @@ esf_otu_filename <- file.path(eytch_data_in,"esf_cluster_otu_table.txt")
 #check to see if directories are accessible
 file_check = file.exists(esf_otu_filename)
 print(paste("check to see if R can access files OK: ", file_check))
-
 esf_otu <- read.table(esf_otu_filename, sep="\t", header=TRUE)
+#View(esf_otu)
 dim(esf_otu)
 head(esf_otu)
 rownames(esf_otu)
@@ -38,6 +38,10 @@ colnames(sample_names) <- "sample_id"
 rownames(sample_names) <- NULL
 dim(sample_names)
 
+# stephanie shared new labels on 3/22/22
+esf_design_filename <- file.path(eytch_data_in,"220317_Metadata_NewLabels_SE.csv")
+esf_design <- read.csv(esf_design_filename, header=TRUE)
+View(esf_design)
 
 #export sample_names for design matrix
 sample_names_filename <- file.path(eytch_data_out,"esf_sample_names.txt")

@@ -1,5 +1,9 @@
 sessionInfo()
 
+library(factoextra)
+library(reshape)
+library(ggplot2)
+
 ## setup root directory path
 if(Sys.info()[4]=="DZ2626UTPURUCKE"){
   # tom epa windows
@@ -18,6 +22,10 @@ eytch_data_in <- file.path(eytch_root, "data_in")
 eytch_data_raw <- file.path(eytch_root, "data_raw")
 eytch_data_out <- file.path(eytch_root, "data_out")
 eytch_graphics <- file.path(eytch_root, "graphics")
+
+
+
+
 
 print("list of loaded packages: ")
 print((.packages()))
