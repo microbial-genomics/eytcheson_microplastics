@@ -1,8 +1,10 @@
 sessionInfo()
 
+library(dplyr)
 library(factoextra)
 library(reshape)
 library(ggplot2)
+library(plotly)
 
 ## setup root directory path
 if(Sys.info()[4]=="DZ2626UTPURUCKE"){

@@ -1,4 +1,4 @@
-
+#View(esf_otu)
 #reduce esf_otu by dropping otus
 summary(esf_otu)
 dim(esf_otu)
@@ -19,6 +19,7 @@ is.data.frame(esf_otu_melt[,c(1,3:6)])
 head(esf_design)
 is.data.frame(esf_design)
 esf_otu_melt_meta <- merge(esf_otu_melt[,c(1,3:6)],esf_design,by=c("sampleid"),all.x=T)
+dim(esf_otu_melt_meta)
 View(esf_otu_melt_meta)
 summary(esf_otu_melt_meta)
 unique(esf_otu_melt_meta$type)
@@ -54,6 +55,7 @@ esf_otu_melt_meta$sampleid_type <- paste0(esf_otu_melt_meta$sampleid,"_",esf_otu
 View(esf_otu_melt_meta[heatmap_these_rows,])
 # Create heatmap with ggplot2
 summary(esf_otu_melt_meta)
+colnames(esf_otu_melt_meta)
 gg_esf <- ggplot(esf_otu_melt_meta[subset_these_rows,], aes(pt, otu_id)) +         
   geom_tile(aes(fill = log_count)) +
   scale_fill_gradient(low = "blue", high = "red")  

@@ -41,8 +41,34 @@ dim(sample_names)
 # stephanie shared new labels on 3/22/22
 esf_design_filename <- file.path(eytch_data_in,"220317_Metadata_NewLabels_SE.csv")
 esf_design <- read.csv(esf_design_filename, header=TRUE)
+dim(esf_design)
 View(esf_design)
 
 #export sample_names for design matrix
 sample_names_filename <- file.path(eytch_data_out,"esf_sample_names.txt")
 write.table(sample_names, sample_names_filename, row.names=F)
+
+#asv files from Maite
+#asv classes
+asv_class_filename <- file.path(eytch_data_in,"asv_class_level.csv")
+#check to see if directories are accessible
+file_check = file.exists(asv_class_filename)
+print(paste("check to see if R can access files OK: ", file_check))
+asv_class <- read.csv(asv_class_filename, header=TRUE)
+#View(asv_class)
+dim(asv_class)
+head(asv_class)
+rownames(asv_class)
+summary(asv_class)
+
+#asv taxa
+asv_taxa_filename <- file.path(eytch_data_in,"asv_table_w_taxa_species_v2.csv")
+#check to see if directories are accessible
+file_check = file.exists(asv_taxa_filename)
+print(paste("check to see if R can access files OK: ", file_check))
+asv_taxa <- read.csv(asv_taxa_filename, header=TRUE)
+#View(asv_taxa)
+dim(asv_taxa)
+head(asv_taxa)
+rownames(asv_class)
+summary(asv_class)
