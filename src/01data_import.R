@@ -60,6 +60,7 @@ dim(asv_class)
 head(asv_class)
 rownames(asv_class)
 summary(asv_class)
+#View(asv_class)
 
 #asv taxa
 asv_taxa_filename <- file.path(eytch_data_in,"asv_table_w_taxa_species_v2.csv")

@@ -2,9 +2,11 @@ sessionInfo()
 
 library(dplyr)
 library(factoextra)
-library(reshape)
+library(reshape2)
 library(ggplot2)
 library(plotly)
+library(pheatmap)
+library(gridExtra)
 
 ## setup root directory path
 if(Sys.info()[4]=="DZ2626UTPURUCKE"){
@@ -24,10 +26,6 @@ eytch_data_in <- file.path(eytch_root, "data_in")
 eytch_data_raw <- file.path(eytch_root, "data_raw")
 eytch_data_out <- file.path(eytch_root, "data_out")
 eytch_graphics <- file.path(eytch_root, "graphics")
-
-
-
-
 
 print("list of loaded packages: ")
 print((.packages()))
