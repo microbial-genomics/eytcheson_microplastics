@@ -7,6 +7,13 @@ library(ggplot2)
 library(plotly)
 library(pheatmap)
 library(gridExtra)
+library(RColorBrewer)
+library(ggpubr)
+source("https://raw.githubusercontent.com/joey711/phyloseq/master/inst/scripts/installer.R",
+       local = TRUE)
+library(phyloseq)
+library(phyloseqGraphTest)
+library(vegan)
 
 ## setup root directory path
 if(Sys.info()[4]=="DZ2626UTPURUCKE"){

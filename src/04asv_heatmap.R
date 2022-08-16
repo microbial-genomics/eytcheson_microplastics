@@ -2,10 +2,12 @@
 #reduce esf_otu by dropping otus
 summary(asv_class)
 dim(asv_class)
-rowSums(asv_class[,2:152])
+#rowSums(asv_class[,2:152])
 
 #View(asv_class)
 colnames(asv_class)
+# "X"         "ASV"       "Sample"    "Abundance" "sampleid"  "effluent"  "type"      "wk"        "pt"        "Kingdom"  
+# "Phylum"    "Class"  
 unique(asv_class$wk)
 unique(asv_class$effluent)
 unique(asv_class$type)
@@ -21,7 +23,7 @@ asv_class_grouped_wk2 <-
   asv_class[heatmap_these_rows_wk2,] %>%
   group_by(effluent, pt, Class) %>%
   summarise(sum = mean(Abundance)) #, n = n()
-asv_class_grouped_wk2
+#View(asv_class_grouped_wk2)
 dim(asv_class_grouped_wk2)
 colnames(asv_class_grouped_wk2)
 asv_class_grouped_wk2.df <- as.data.frame(asv_class_grouped_wk2)
@@ -31,7 +33,8 @@ asv_class_grouped_wk2.df$Class <- as.factor(asv_class_grouped_wk2.df$Class)
 #View(asv_class_grouped_wk2.df)
 summary(asv_class_grouped_wk2.df)
 hist(asv_class_grouped_wk2.df$sum)
-asv_class_grouped_wk2_wide <- cast(asv_class_grouped_wk2.df, Class ~ pt+effluent, value = "sum")
+#cast replaced by acast for array and dcast for dataframe
+asv_class_grouped_wk2_wide <- dcast(asv_class_grouped_wk2.df, Class ~ pt+effluent, value = "sum")
 row.names(asv_class_grouped_wk2_wide) <- asv_class_grouped_wk2_wide$Class
 asv_class_grouped_wk2_wide <- asv_class_grouped_wk2_wide[,2:13]
 asv_class_grouped_wk2_wide[is.na(asv_class_grouped_wk2_wide)] <- min(asv_class_grouped_wk2_wide, na.rm=TRUE)/2 #replace nas with min/2
@@ -76,7 +79,7 @@ asv_class_grouped_wk6.df$Class <- as.factor(asv_class_grouped_wk6.df$Class)
 #View(asv_class_grouped_wk6.df)
 summary(asv_class_grouped_wk6.df)
 hist(asv_class_grouped_wk6.df$sum)
-asv_class_grouped_wk6_wide <- cast(asv_class_grouped_wk6.df, Class ~ pt+effluent, value = "sum")
+asv_class_grouped_wk6_wide <- dcast(asv_class_grouped_wk6.df, Class ~ pt+effluent, value = "sum")
 row.names(asv_class_grouped_wk6_wide) <- asv_class_grouped_wk6_wide$Class
 asv_class_grouped_wk6_wide <- asv_class_grouped_wk6_wide[,2:13]
 asv_class_grouped_wk6_wide[is.na(asv_class_grouped_wk6_wide)] <- min(asv_class_grouped_wk6_wide, na.rm=TRUE)/2 #replace nas with min/2
@@ -121,7 +124,7 @@ asv_class_grouped_wk10.df$Class <- as.factor(asv_class_grouped_wk10.df$Class)
 #View(asv_class_grouped_wk10.df)
 summary(asv_class_grouped_wk10.df)
 hist(asv_class_grouped_wk10.df$sum)
-asv_class_grouped_wk10_wide <- cast(asv_class_grouped_wk10.df, Class ~ pt+effluent, value = "sum")
+asv_class_grouped_wk10_wide <- dcast(asv_class_grouped_wk10.df, Class ~ pt+effluent, value = "sum")
 row.names(asv_class_grouped_wk10_wide) <- asv_class_grouped_wk10_wide$Class
 asv_class_grouped_wk10_wide <- asv_class_grouped_wk10_wide[,2:13]
 asv_class_grouped_wk10_wide[is.na(asv_class_grouped_wk10_wide)] <- min(asv_class_grouped_wk10_wide, na.rm=TRUE)/2 #replace nas with min/2
@@ -181,7 +184,7 @@ asv_phylum_grouped_wk2.df$Phylum <- as.factor(asv_phylum_grouped_wk2.df$Phylum)
 #View(asv_phylum_grouped_wk2.df)
 summary(asv_phylum_grouped_wk2.df)
 #hist(asv_phylum_grouped_wk2.df$sum)
-asv_phylum_grouped_wk2_wide <- cast(asv_phylum_grouped_wk2.df, Phylum ~ pt+effluent, value = "sum")
+asv_phylum_grouped_wk2_wide <- dcast(asv_phylum_grouped_wk2.df, Phylum ~ pt+effluent, value = "sum")
 row.names(asv_phylum_grouped_wk2_wide) <- asv_phylum_grouped_wk2_wide$Phylum
 asv_phylum_grouped_wk2_wide <- asv_phylum_grouped_wk2_wide[,2:13]
 asv_phylum_grouped_wk2_wide[is.na(asv_phylum_grouped_wk2_wide)] <- min(asv_phylum_grouped_wk2_wide, na.rm=TRUE)/2 #replace nas with min/2
@@ -228,7 +231,7 @@ asv_phylum_grouped_wk6.df$Phylum <- as.factor(asv_phylum_grouped_wk6.df$Phylum)
 #View(asv_phylum_grouped_wk6.df)
 summary(asv_phylum_grouped_wk6.df)
 hist(asv_phylum_grouped_wk6.df$sum)
-asv_phylum_grouped_wk6_wide <- cast(asv_phylum_grouped_wk6.df, Phylum ~ pt+effluent, value = "sum")
+asv_phylum_grouped_wk6_wide <- dcast(asv_phylum_grouped_wk6.df, Phylum ~ pt+effluent, value = "sum")
 row.names(asv_phylum_grouped_wk6_wide) <- asv_phylum_grouped_wk6_wide$Phylum
 asv_phylum_grouped_wk6_wide <- asv_phylum_grouped_wk6_wide[,2:13]
 asv_phylum_grouped_wk6_wide[is.na(asv_phylum_grouped_wk6_wide)] <- min(asv_phylum_grouped_wk6_wide, na.rm=TRUE)/2 #replace nas with min/2
@@ -273,7 +276,7 @@ asv_phylum_grouped_wk10.df$Phylum <- as.factor(asv_phylum_grouped_wk10.df$Phylum
 #View(asv_phylum_grouped_wk10.df)
 summary(asv_phylum_grouped_wk10.df)
 hist(asv_phylum_grouped_wk10.df$sum)
-asv_phylum_grouped_wk10_wide <- cast(asv_phylum_grouped_wk10.df, Phylum ~ pt+effluent, value = "sum")
+asv_phylum_grouped_wk10_wide <- dcast(asv_phylum_grouped_wk10.df, Phylum ~ pt+effluent, value = "sum")
 row.names(asv_phylum_grouped_wk10_wide) <- asv_phylum_grouped_wk10_wide$Phylum
 asv_phylum_grouped_wk10_wide <- asv_phylum_grouped_wk10_wide[,2:13]
 asv_phylum_grouped_wk10_wide[is.na(asv_phylum_grouped_wk10_wide)] <- min(asv_phylum_grouped_wk10_wide, na.rm=TRUE)/2 #replace nas with min/2

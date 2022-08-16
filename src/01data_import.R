@@ -20,6 +20,15 @@
 # ESFmicroplastic_515F-806R_cluster__otu_table_v2.xlsx -- sheet esf_cluster_otu_table 
 # saved as esf_cluster_otu_table.txt tab-delimited file
 
+# 6/8/2022 From Stephanie to Maite
+# I found this ASV table which has class information in Maitê’s folder on the O: drive 
+# (CEMM_Microplastics/Pilgrim2021/MaiteAnalysis/DADA2 results/asv_table_w_taxa_species_v1.csv). 
+# The only thing I am unsure about is that this file has a sequence instead of an identifier 
+# (e.g. OTU001) in the first column, and there are many more ASVs than OTUs (34208 vs 5402, respectively). 
+#
+# Maitê, I think you and Huiyun made ASV tables; do you have one that links to the MP data (i.e. material, 
+# collection time, etc) and provides information down to the class level?
+  
 esf_otu_filename <- file.path(eytch_data_in,"esf_cluster_otu_table.txt")
 
 #check to see if directories are accessible
@@ -42,7 +51,7 @@ dim(sample_names)
 esf_design_filename <- file.path(eytch_data_in,"220317_Metadata_NewLabels_SE.csv")
 esf_design <- read.csv(esf_design_filename, header=TRUE)
 dim(esf_design)
-View(esf_design)
+#View(esf_design)
 
 #export sample_names for design matrix
 sample_names_filename <- file.path(eytch_data_out,"esf_sample_names.txt")
