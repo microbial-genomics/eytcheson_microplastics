@@ -82,3 +82,63 @@ dim(asv_taxa)
 head(asv_taxa)
 rownames(asv_class)
 summary(asv_class)
+
+#"O:\PRIV\CEMM_Microplastics\Stephanie\Microplastics\ESF\ESF 2021\qPCR\qPCRdata_replaced_logLOQ_values.xlsx". 
+#In this file the non-detected samples were replaced with 1 and the samples that were below LOQ were replaced by the 
+#lowest concentration detected on the standard curve/square root of 2. 
+
+#In the “MPs” tab the important columns are 
+#A (plastic/glass), B (time of collection), D (river or TWW, also FB=field blank for week 0), and G (S. maltophilia, 
+#recorded as gene copies per microplastic piece). 
+# I additionally deleted S. maltophilia values that said 'rerun'
+s_maltophilia_filename <- file.path(eytch_data_in, "qPCR_mps_S_maltophilia.csv")
+#check to see if directories are accessible
+file_check = file.exists(s_maltophilia_filename)
+print(paste("check to see if R can access files OK: ", file_check))
+s_maltophilia <- read.csv(s_maltophilia_filename, header=TRUE)
+#View(s_maltophili)
+dim(s_maltophilia)
+head(s_maltophilia)
+rownames(s_maltophilia)
+summary(s_maltophilia)
+colnames(s_maltophilia)
+s_maltophilia$S_maltophilia
+
+#In the “MP Composites” tab the important columns are A,B, C 
+#(same as A/B/D from MP tab) and columns E/F/G are different markers that we looked at (int1, sul1, P. aeruginosa). 
+# confused about the intial rows of non-detects, whether they should be dropped
+mp_composites_filename <- file.path(eytch_data_in, "qPCR_mp_composites.csv")
+#check to see if directories are accessible
+file_check = file.exists(mp_composites_filename)
+print(paste("check to see if R can access files OK: ", file_check))
+mp_composites <- read.csv(mp_composites_filename, header=TRUE)
+#View(s_maltophili)
+dim(mp_composites)
+head(mp_composites)
+rownames(mp_composites)
+summary(mp_composites)
+colnames(mp_composites)
+#values are not numeric and still some zeroes
+mp_composites$int1 <- as.numeric(mp_composites$int1)
+mp_composites$int1[which(mp_composites$int1==0)] <- 1
+mp_composites$int1
+
+#Data for water samples are on the third tab, with A listing the time of collection, C listing river (CON) or TWW, 
+#and  F/G/H/I are gene copies of the markers of interest per 100 mL. 
+mp_water_filename <- file.path(eytch_data_in, "qPCR_mp_water.csv")
+#check to see if directories are accessible
+file_check = file.exists(mp_water_filename)
+print(paste("check to see if R can access files OK: ", file_check))
+mp_water <- read.csv(mp_water_filename, header=TRUE)
+#View(s_maltophili)
+dim(mp_water)
+head(mp_water)
+rownames(mp_water)
+summary(mp_water)
+
+
+#Slide 7 of the figures file 
+#("O:\PRIV\CEMM_Microplastics\ESF Manuscript\V6\Draft of manuscript figures updated 3-21-24.pptx") has qPCR plots, 
+#and the Prism file is at "O:\PRIV\CEMM_Microplastics\Stephanie\Microplastics\ESF\ESF 2021\Prism\qPCR_layouts.pzfx" 
+#if you need it. 
+

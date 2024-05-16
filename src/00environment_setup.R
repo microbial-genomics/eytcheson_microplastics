@@ -19,9 +19,9 @@ library(vegan)
 if(Sys.info()[4]=="DZ2626UTPURUCKE"){
   # tom epa windows
   eytch_root <- file.path("c:", "git", "eytcheson_microplastics")
-} else if (Sys.info()[4]=="LZ2626UTPURUCKE"){ 
+} else if (Sys.info()[4]=="LZ26TPURUCKE-2"){ 
   # tom windows 
-  eytch_root <- file.path("c:","git","eytcheson_microplastics")
+  eytch_root <- file.path("C:", "Users", "tpurucke", "git", "eytcheson_microplastics")
 } else if(Sys.info()[1]=="Linux" & dir.exists(file.path("","work","BIOMARK","ww2dw","ww2dw"))){
   # hpc linux BIOMARK
   eytch_root <- file.path("","work","MICROPLASTICS","eytcheson_microplastics")
