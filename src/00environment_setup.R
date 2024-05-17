@@ -9,8 +9,8 @@ library(pheatmap)
 library(gridExtra)
 library(RColorBrewer)
 library(ggpubr)
-source("https://raw.githubusercontent.com/joey711/phyloseq/master/inst/scripts/installer.R",
-       local = TRUE)
+#source("https://raw.githubusercontent.com/joey711/phyloseq/master/inst/scripts/installer.R",
+#       local = TRUE)
 library(phyloseq)
 library(phyloseqGraphTest)
 library(vegan)
