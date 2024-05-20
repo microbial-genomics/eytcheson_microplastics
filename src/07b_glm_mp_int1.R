@@ -20,7 +20,7 @@ colnames(mp_composites)
 # int1
 mp_composites_glm_int1 <- glm(int1 ~ Plastic_Glass + Treatment + Collect, 
                               data = mp_composites, 
-                              family = gaussian(link='identity'))
+                              family = gaussian(link='log'))
 summary(mp_composites_glm_int1)
 # Call:
 #   glm(formula = int1 ~ Plastic_Glass + Treatment + Collect, family = gaussian(link = "identity"), 

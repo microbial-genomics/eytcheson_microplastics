@@ -15,10 +15,34 @@ s_maltophilia$Collect <- factor(s_maltophilia$Collect,
                                    ordered=TRUE)
 s_maltophilia$Treatment <- as.factor(s_maltophilia$Treatment)
 
+# transform 
+# Perform Box-Cox transformation and find optimal lambda
+sm_bc <- powerTransform(s_maltophilia$S_maltophilia)
+sm_bc$lambda
+# Transform the response variable using the optimal lambda
+transformed_response <- (s_maltophilia$S_maltophilia^sm_bc$lambda - 1) / sm_bc$lambda
+s_maltophilia$transformed_response <- transformed_response
+#log10
+s_maltophilia$log10_response <- log10(s_maltophilia$S_maltophilia)
+
+
+# natural log
 s_maltophilia_glm <- glm(S_maltophilia ~ Plastic_Glass + Treatment + Collect, 
                          data = s_maltophilia, 
-                         family = gaussian(link='identity'))
+                         family = gaussian(link='log'))
 summary(s_maltophilia_glm)
+
+# boxcox
+s_maltophilia_glm_bc <- glm(transformed_response ~ Plastic_Glass + Treatment + Collect, 
+                         data = s_maltophilia, 
+                         family = gaussian(link='identity'))
+summary(s_maltophilia_glm_bc)
+
+# common log 10
+s_maltophilia_glm_log10 <- glm(log10_response ~ Plastic_Glass + Treatment + Collect, 
+                         data = s_maltophilia, 
+                         family = gaussian(link='identity'))
+summary(s_maltophilia_glm_log10)
 
 #Call:
 #  glm(formula = S_maltophilia ~ Plastic_Glass + Treatment + Collect, 
@@ -53,7 +77,7 @@ summary(s_maltophilia_glm)
 
 
 ### step wise implementation
-s_maltophilia_step <- step(s_maltophilia_glm, 
+s_maltophilia_step <- step(s_maltophilia_glm_bc, 
                            scope = list(lower = ~ 1, upper = ~ Plastic_Glass + Treatment + Collect),
                            direction = "both")
 summary(s_maltophilia_step)

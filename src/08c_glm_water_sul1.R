@@ -15,7 +15,7 @@ mp_water$Treatment <- as.factor(mp_water$Treatment)
 
 sul1_water_glm <- glm(sul1 ~ Treatment + Collect, 
                       data = mp_water, 
-                      family = gaussian(link='identity'))
+                      family = gaussian(link='log'))
 summary(sul1_water_glm)
 # Call:
 #   glm(formula = sul1 ~ Treatment + Collect, family = gaussian(link = "identity"), 

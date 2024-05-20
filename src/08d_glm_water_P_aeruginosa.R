@@ -15,7 +15,7 @@ mp_water$Treatment <- as.factor(mp_water$Treatment)
 
 P_aeruginosa_water_glm <- glm(P_aeruginosa ~ Treatment + Collect, 
                       data = mp_water, 
-                      family = gaussian(link='identity'))
+                      family = gaussian(link='log'))
 summary(P_aeruginosa_water_glm)
 # Call:
 #   glm(formula = P_aeruginosa ~ Treatment + Collect, family = gaussian(link = "identity"), 

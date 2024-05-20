@@ -14,6 +14,8 @@ library(ggpubr)
 library(phyloseq)
 library(phyloseqGraphTest)
 library(vegan)
+library(MASS)
+library(car)
 
 ## setup root directory path
 if(Sys.info()[4]=="DZ2626UTPURUCKE"){

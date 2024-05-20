@@ -8,7 +8,7 @@
 # sul1
 mp_composites_glm_sul1 <- glm(sul1 ~ Plastic_Glass + Treatment + Collect, 
                               data = mp_composites, 
-                              family = gaussian(link='identity'))
+                              family = gaussian(link='log'))
 summary(mp_composites_glm_sul1)
 # Call:
 #   glm(formula = sul1 ~ Plastic_Glass + Treatment + Collect, family = gaussian(link = "identity"), 

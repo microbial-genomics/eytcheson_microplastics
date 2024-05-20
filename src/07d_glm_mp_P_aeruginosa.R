@@ -7,7 +7,7 @@
 ### full model fit
 mp_composites_glm_Pa <- glm(P_aeruginosa ~ Plastic_Glass + Treatment + Collect, 
                             data = mp_composites, 
-                            family = gaussian(link='identity'))
+                            family = gaussian(link='log'))
 summary(mp_composites_glm_Pa)
 # Call:
 #   glm(formula = P_aeruginosa ~ Plastic_Glass + Treatment + Collect, 
