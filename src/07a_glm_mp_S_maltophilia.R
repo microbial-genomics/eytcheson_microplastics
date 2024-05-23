@@ -24,6 +24,46 @@ transformed_response <- (s_maltophilia$S_maltophilia^sm_bc$lambda - 1) / sm_bc$l
 s_maltophilia$transformed_response <- transformed_response
 #log10
 s_maltophilia$log10_response <- log10(s_maltophilia$S_maltophilia)
+#ln response
+s_maltophilia$log_response <- log(s_maltophilia$S_maltophilia)
+
+# normality tests
+# untransformed
+shapiro.test(s_maltophilia$S_maltophilia)
+hist(s_maltophilia$S_maltophilia)
+qqnorm(s_maltophilia$S_maltophilia, main="Untransformed (W=0.26)"); qqline(s_maltophilia$S_maltophilia)
+#Shapiro-Wilk normality test
+#data:  s_maltophilia$S_maltophilia
+#W = 0.25298, p-value < 2.2e-16
+# box cox
+shapiro.test(s_maltophilia$transformed_response)
+hist(s_maltophilia$transformed_response)
+qqnorm(s_maltophilia$transformed_response, main="Box-Cox (W=0.93)"); qqline(s_maltophilia$transformed_response)
+#Shapiro-Wilk normality test
+#data:  s_maltophilia$transformed_response
+#W = 0.92868, p-value = 4.231e-06
+# log10
+shapiro.test(s_maltophilia$log10_response)
+hist(s_maltophilia$log10_response)
+qqnorm(s_maltophilia$log10_response, main="log10  (W=0.91)"); qqline(s_maltophilia$log10_response)
+#Shapiro-Wilk normality test
+#data:  s_maltophilia$log10_response
+#W = 0.90999, p-value = 3.239e-07
+# log/ln
+shapiro.test(s_maltophilia$log_response)
+hist(s_maltophilia$log_response)
+qqnorm(s_maltophilia$log_response, main="ln (W=0.91)"); qqline(s_maltophilia$log_response)
+#Shapiro-Wilk normality test
+#data:  s_maltophilia$log10_response
+#W = 0.90999, p-value = 3.239e-07
+
+par(mfrow = c(2, 2))
+qqnorm(s_maltophilia$S_maltophilia, main="Untransformed  (W=0.26)"); qqline(s_maltophilia$S_maltophilia)
+qqnorm(s_maltophilia$transformed_response, main="Box-Cox (W=0.93)"); qqline(s_maltophilia$transformed_response)
+qqnorm(s_maltophilia$log10_response, main="log10 (W=0.91)"); qqline(s_maltophilia$log10_response)
+qqnorm(s_maltophilia$log_response, main="ln (W=0.91)"); qqline(s_maltophilia$log_response)
+par(mfrow=c(1,1))
+
 
 
 # natural log
@@ -76,7 +116,7 @@ summary(s_maltophilia_glm_log10)
 # time and the S maltophilia levels.
 
 
-### step wise implementation
+### step wise implementation (box cox)
 s_maltophilia_step <- step(s_maltophilia_glm_bc, 
                            scope = list(lower = ~ 1, upper = ~ Plastic_Glass + Treatment + Collect),
                            direction = "both")
