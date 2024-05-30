@@ -3,6 +3,18 @@
 ############## S. maltophilia on microplastics
 ####################################
 ####################################
+# Stenotrophomonas maltophilia 
+# It is an aerobic, non-fermenting, gram-negative bacillus that is found in various aqueous environments 
+# like plant rhizospheres, soil, and water sources.
+# S. maltophilia is an opportunistic pathogen that can cause nosocomial infections, especially in 
+# immunocompromised patients. Risk factors include underlying malignancy, cystic fibrosis, mechanical 
+# ventilation, recent surgery, and exposure to broad-spectrum antibiotics.
+# It frequently colonizes humid surfaces like ventilator tubes and catheters and can form biofilms on 
+# plastic surfaces. S. maltophilia also often co-occurs with Pseudomonas aeruginosa.
+# Infections can occur in various organs, but it is commonly found in respiratory tract infections. 
+# Treatment can be challenging as S. maltophilia is intrinsically resistant to many antibiotic classes.
+
+
 
 ### full model fit
 #View(s_maltophilia)
@@ -15,56 +27,102 @@ s_maltophilia$Collect <- factor(s_maltophilia$Collect,
                                    ordered=TRUE)
 s_maltophilia$Treatment <- as.factor(s_maltophilia$Treatment)
 
-# transform 
+
+
+######################################
+# transformations 
+colnames(s_maltophilia)
+
 # Perform Box-Cox transformation and find optimal lambda
 sm_bc <- powerTransform(s_maltophilia$S_maltophilia)
 sm_bc$lambda
 # Transform the response variable using the optimal lambda
-transformed_response <- (s_maltophilia$S_maltophilia^sm_bc$lambda - 1) / sm_bc$lambda
-s_maltophilia$transformed_response <- transformed_response
+transformed_sm_response <- (s_maltophilia$S_maltophilia^sm_bc$lambda - 1) / sm_bc$lambda
+s_maltophilia$transformed_sm_response <- transformed_sm_response
 #log10
-s_maltophilia$log10_response <- log10(s_maltophilia$S_maltophilia)
+s_maltophilia$log10_sm_response <- log10(s_maltophilia$S_maltophilia)
 #ln response
-s_maltophilia$log_response <- log(s_maltophilia$S_maltophilia)
+s_maltophilia$log_sm_response <- log(s_maltophilia$S_maltophilia)
 
 # normality tests
 # untransformed
-shapiro.test(s_maltophilia$S_maltophilia)
+sm_boxplot_ut <- ggplot(s_maltophilia, aes(x = Collect, y = S_maltophilia)) +
+  geom_boxplot() +
+  labs(x = "Collect", y = "S_maltophilia") +
+  theme_bw()
+sm_boxplot_ut
+mp_sm_W_test <- shapiro.test(s_maltophilia$S_maltophilia)
+mp_sm_W_test
+mp_sm_W_test$p.value
+mp_sm_W_test$statistic
 hist(s_maltophilia$S_maltophilia)
-qqnorm(s_maltophilia$S_maltophilia, main="Untransformed (W=0.26)"); qqline(s_maltophilia$S_maltophilia)
-#Shapiro-Wilk normality test
-#data:  s_maltophilia$S_maltophilia
-#W = 0.25298, p-value < 2.2e-16
-# box cox
-shapiro.test(s_maltophilia$transformed_response)
-hist(s_maltophilia$transformed_response)
-qqnorm(s_maltophilia$transformed_response, main="Box-Cox (W=0.93)"); qqline(s_maltophilia$transformed_response)
-#Shapiro-Wilk normality test
-#data:  s_maltophilia$transformed_response
-#W = 0.92868, p-value = 4.231e-06
-# log10
-shapiro.test(s_maltophilia$log10_response)
-hist(s_maltophilia$log10_response)
-qqnorm(s_maltophilia$log10_response, main="log10  (W=0.91)"); qqline(s_maltophilia$log10_response)
-#Shapiro-Wilk normality test
-#data:  s_maltophilia$log10_response
-#W = 0.90999, p-value = 3.239e-07
-# log/ln
-shapiro.test(s_maltophilia$log_response)
-hist(s_maltophilia$log_response)
-qqnorm(s_maltophilia$log_response, main="ln (W=0.91)"); qqline(s_maltophilia$log_response)
-#Shapiro-Wilk normality test
-#data:  s_maltophilia$log10_response
-#W = 0.90999, p-value = 3.239e-07
+qqnorm(s_maltophilia$S_maltophilia, main=paste0("Untransformed (W=",
+                                  round(mp_sm_W_test$statistic,3),")")); qqline(s_maltophilia$S_maltophilia)
+# box-cox
+sm_boxplot_bc <- ggplot(s_maltophilia, aes(x = Collect, y = transformed_sm_response)) +
+  geom_boxplot() +
+  labs(x = "Collect", y = "transformed_sm_response") +
+  theme_bw()
+sm_boxplot_bc
+mp_sm_bc_W_test <- shapiro.test(s_maltophilia$transformed_sm_response)
+hist(s_maltophilia$transformed_sm_response)
+qqnorm(s_maltophilia$transformed_sm_response, main=paste0("Box-Cox (W=",
+                                  round(mp_sm_W_test$statistic,3),")")); qqline(s_maltophilia$transformed_sm_response)
 
-par(mfrow = c(2, 2))
+# log10
+sm_boxplot_log10 <- ggplot(s_maltophilia, aes(x = Collect, y = log10_sm_response)) +
+  geom_boxplot() +
+  labs(x = "Collect", y = "transformed_log10_response") +
+  theme_bw()
+sm_boxplot_log10
+shapiro.test(s_maltophilia$log10_sm_response)
+hist(s_maltophilia$log10_sm_response)
+qqnorm(s_maltophilia$log10_sm_response, main="log10  (W=0.91)"); qqline(s_maltophilia$log10_sm_response)
+
+# log/ln
+sm_boxplot_log <- ggplot(s_maltophilia, aes(x = Collect, y = log_sm_response)) +
+  geom_boxplot() +
+  labs(x = "Collect", y = "transformed_log_response") +
+  theme_bw()
+sm_boxplot_log
+shapiro.test(s_maltophilia$log_sm_response)
+hist(s_maltophilia$log_sm_response)
+qqnorm(s_maltophilia$log_sm_response, main="ln (W=0.91)"); qqline(s_maltophilia$log_sm_response)
+
+
+par(mfrow = c(4, 3))
+# untransformed
+ggplot(s_maltophilia, aes(x = Collect, y = S_maltophilia)) +
+  geom_boxplot() +
+  labs(x = "Collect", y = "S_maltophilia") +
+  theme_bw()
+hist(s_maltophilia$S_maltophilia)
 qqnorm(s_maltophilia$S_maltophilia, main="Untransformed  (W=0.26)"); qqline(s_maltophilia$S_maltophilia)
-qqnorm(s_maltophilia$transformed_response, main="Box-Cox (W=0.93)"); qqline(s_maltophilia$transformed_response)
-qqnorm(s_maltophilia$log10_response, main="log10 (W=0.91)"); qqline(s_maltophilia$log10_response)
-qqnorm(s_maltophilia$log_response, main="ln (W=0.91)"); qqline(s_maltophilia$log_response)
+# box cox
+ggplot(s_maltophilia, aes(x = Collect, y = transformed_sm_response)) +
+  geom_boxplot() +
+  labs(x = "Collect", y = "transformed_sm_response") +
+  theme_bw()
+hist(s_maltophilia$transformed_sm_response)
+qqnorm(s_maltophilia$transformed_sm_response, main="Box-Cox (W=0.93)"); qqline(s_maltophilia$transformed_sm_response)
+# log10
+ggplot(s_maltophilia, aes(x = Collect, y = log10_sm_response)) +
+  geom_boxplot() +
+  labs(x = "Collect", y = "log10_sm_response") +
+  theme_bw()
+hist(s_maltophilia$log10_sm_response)
+qqnorm(s_maltophilia$log10_sm_response, main="log10 (W=0.91)"); qqline(s_maltophilia$log10_sm_response)
+# ln
+ggplot(s_maltophilia, aes(x = Collect, y = log_sm_response)) +
+  geom_boxplot() +
+  labs(x = "Collect", y = "log_sm_response") +
+  theme_bw()
+hist(s_maltophilia$log_sm_response)
+qqnorm(s_maltophilia$log_sm_response, main="ln (W=0.91)"); qqline(s_maltophilia$log_sm_response)
 par(mfrow=c(1,1))
 
-
+# end transformations
+############################################################
 
 # natural log
 s_maltophilia_glm <- glm(S_maltophilia ~ Plastic_Glass + Treatment + Collect, 
