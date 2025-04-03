@@ -188,10 +188,10 @@ summary(s_maltophilia_glm_log10)
 
 
 ### step wise implementation (log10)
-s_maltophilia_step <- step(s_maltophilia_glm_log10, 
+s_maltophilia_step_log10 <- step(s_maltophilia_glm_log10, 
                            scope = list(lower = ~ 1, upper = ~ Plastic_Glass + Treatment + Collect),
                            direction = "both")
-summary(s_maltophilia_step)
+summary(s_maltophilia_step_log10)
 
 # end stepwise glm
 ################################################################

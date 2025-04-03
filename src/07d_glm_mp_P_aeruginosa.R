@@ -166,27 +166,9 @@ summary(mp_composites_glm_Pa_log10)
 # .Q represents the quadratic trend. The significant .Q term suggests a curvilinear, U-shaped relationship between 
 # time and the S maltophilia levels.
 ### step wise implementation
-mp_Pa_step <- step(mp_composites_glm_Pa, 
+mp_Pa_step_log10 <- step(mp_composites_glm_Pa_log10, 
                      scope = list(lower = ~ 1, upper = ~ Plastic_Glass + Treatment + Collect),
                      direction = "both")
-summary(mp_Pa_step)
-# Call:
-#   glm(formula = P_aeruginosa ~ Collect, family = gaussian(link = "identity"), 
-#       data = mp_composites)
-# 
-# Coefficients:
-#   Estimate Std. Error t value Pr(>|t|)   
-# (Intercept)    539.6      196.7   2.743  0.00770 **
-#   Collect.L     1343.9      405.3   3.316  0.00144 **
-#   Collect.Q      857.7      393.4   2.180  0.03256 * 
-#   Collect.C      294.7      381.1   0.773  0.44184   
-# ---
-#   Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1
-# 
-# (Dispersion parameter for gaussian family taken to be 2857121)
-# 
-# Null deviance: 253877509  on 74  degrees of freedom
-# Residual deviance: 202855600  on 71  degrees of freedom
-# AIC: 1333.6
-# 
-# Number of Fisher Scoring iterations: 2
+summary(mp_Pa_step_log10)
+# end stepwise glm
+################################################################

@@ -177,28 +177,9 @@ summary(s_maltophilia_water_glm_log10)
 # .Q represents the quadratic trend. The significant .Q term suggests a curvilinear, U-shaped relationship between 
 # time and the S maltophilia levels.
 ### step wise implementation
-s_maltophilia_water_step <- step(s_maltophilia_water_glm, 
+s_maltophilia_water_step_log10 <- step(s_maltophilia_water_glm_log10, 
                            scope = list(lower = ~ 1, upper = ~ Treatment + Collect),
                            direction = "both")
-summary(s_maltophilia_water_step)
-# Call:
-#   glm(formula = S_maltophilia ~ Collect, family = gaussian(link = "identity"), 
-#       data = mp_water)
-# 
-# Coefficients:
-#   Estimate Std. Error t value Pr(>|t|)    
-# (Intercept)  3148640     587144   5.363    3e-05 ***
-#   Collect.L    6214561    1334204   4.658 0.000152 ***
-#   Collect.Q    5345921    1174287   4.552 0.000194 ***
-#   Collect.C    1823601     988838   1.844 0.080022 .  
-# ---
-#   Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1
-# 
-# (Dispersion parameter for gaussian family taken to be 6.017239e+12)
-# 
-# Null deviance: 2.9493e+14  on 23  degrees of freedom
-# Residual deviance: 1.2034e+14  on 20  degrees of freedom
-# (8 observations deleted due to missingness)
-# AIC: 779.95
-# 
-# Number of Fisher Scoring iterations: 2
+summary(s_maltophilia_water_step_log10)
+# end stepwise glm
+################################################################

@@ -154,8 +154,15 @@ colnames(mp_water)
 # common log 10
 P_aeruginosa_water_glm_log10 <- glm(log10_Pa_response ~ Treatment + Collect, 
                       data = mp_water, 
-                      family = gaussian(link='identityg'))
+                      family = gaussian(link='identity'))
 summary(P_aeruginosa_water_glm_log10)
+
+# box-cox
+P_aeruginosa_water_glm_bc <- glm(transformed_Pa_response ~ Treatment + Collect, 
+                                    data = mp_water, 
+                                    family = gaussian(link='identity'))
+summary(P_aeruginosa_water_glm_bc)
+
 # end full glm
 ################################################################
 
@@ -169,28 +176,9 @@ summary(P_aeruginosa_water_glm_log10)
 # .Q represents the quadratic trend. The significant .Q term suggests a curvilinear, U-shaped relationship between 
 # time and the S maltophilia levels.
 ### step wise implementation
-step(P_aeruginosa_water_glm, 
-     scope = list(lower = ~ 1, upper = ~ Treatment + Collect),
-     direction = "both")
-
-P_aeruginosa_water_step <- step(P_aeruginosa_water_glm, 
+P_aeruginosa_water_step_log10 <- step(P_aeruginosa_water_glm_log10, 
                         scope = list(lower = ~ 1, upper = ~ Treatment + Collect),
                         direction = "both")
-summary(P_aeruginosa_water_step)
-# Call:
-#   glm(formula = P_aeruginosa ~ 1, family = gaussian(link = "identity"), 
-#       data = mp_water)
-# 
-# Coefficients:
-#   Estimate Std. Error t value Pr(>|t|)    
-# (Intercept)    11828       2533    4.67 5.52e-05 ***
-#   ---
-#   Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1
-# 
-# (Dispersion parameter for gaussian family taken to be 205267211)
-# 
-# Null deviance: 6363283547  on 31  degrees of freedom
-# Residual deviance: 6363283547  on 31  degrees of freedom
-# AIC: 706.27
-# 
-# Number of Fisher Scoring iterations: 2
+summary(P_aeruginosa_water_step_log10)
+# end stepwise glm
+################################################################
